@@ -1,4 +1,4 @@
-import { Button, StyleSheet, View } from 'react-native';
+import { TouchableOpacity, StyleSheet, View, Text, Button } from 'react-native';
 
 export default function Buttons() {
 
@@ -27,11 +27,19 @@ export default function Buttons() {
           title="A disabled button"
           disabled={true}
         />
-        <Button
+        <Button style={styles.bigButton}
           onPress={handleOnPress}
           title="OK!"
           color="#841584"
         />
+      </View>
+      <View>
+      <TouchableOpacity
+          style={styles.bigbutton}
+          onPress={handleOnPress} >
+          <Text style={styles.textbutton}>Press Here</Text>
+        </TouchableOpacity>
+
       </View>
     </View>
   );
@@ -49,5 +57,16 @@ const styles = StyleSheet.create({
     margin: 20,
     flexDirection: 'row',
     justifyContent: 'space-between'
-  }
+  },
+  bigbutton: {
+    height: 100,
+    backgroundColor: '#841584',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  textbutton: {
+    fontSize: 50,
+    color: 'white',
+    fontStyle: 'italic'
+  },
 });

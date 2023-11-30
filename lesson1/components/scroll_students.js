@@ -1,4 +1,4 @@
-import { TouchableOpacity, StyleSheet, View, Text } from 'react-native';
+import { TouchableOpacity, StyleSheet, View, Text, ScrollView } from 'react-native';
 
 const students = [
   { name: 'Ben', id: 1 },
@@ -16,24 +16,27 @@ const students = [
 ];
 
 export default function ScrollStudents() {
+  
 
-  function handleOnPress() {
-    alert('You clicked a button');
+  function handleOnPress(student) {
+    alert('You clicked a button for ' + student);
   }
 
   return (
     <View style={styles.container}>
+      <ScrollView>
       {
         students.map((student) => (
           <View key={student.id} style={styles.item}>
             <TouchableOpacity
               style={styles.button}
-              onPress={handleOnPress}>
+              onPress={() => handleOnPress(student.name)}>
               <Text style={styles.name}>{student.name}</Text>
             </TouchableOpacity>
           </View>
         ))
       }
+      </ScrollView>
     </View>
   );
 };
@@ -47,6 +50,7 @@ const styles = StyleSheet.create({
   },
   button: {
     height: 100,
+    width:350,
     alignItems: "center",
     justifyContent: "center",
     backgroundColor: "#64D9FC"

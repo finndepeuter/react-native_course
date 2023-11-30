@@ -13,7 +13,10 @@ export default function FlexStyles() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    flexDirection: 'row',
+    // flexDirection: 'row',
+    flexDirection: 'column',
+    justifyContent: 'space-around',
+    alignItems: 'stretch', // only works when there is no width
   },
   powderblue: {
     width: 60,
@@ -21,7 +24,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'powderblue',
   },
   skyblue: {
-    width: 60,
+    // width: 60,
     height: 60,
     backgroundColor: 'skyblue',
   },

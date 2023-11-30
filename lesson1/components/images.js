@@ -1,10 +1,24 @@
-import { StyleSheet, View, Image } from 'react-native';
+import { TouchableOpacity, StyleSheet, View, Image } from 'react-native';
+
 
 export default function Images() {
+
+  function handleOnPress() {
+    let i = 0;
+    for (let k = 0; k < 10; k++) {
+      console.log(i);
+      i = i + 1;
+    }
+    
+    alert(i);
+  }
+
   return (
     <View style={styles.container}>
       <Image source={require('../images/react-logo.png')} style={styles.smalllogo}/>
-      <Image source={require('../images/react-logo.png')} style={styles.biglogo}/>
+      <TouchableOpacity onPress={handleOnPress}>
+        <Image source={require('../images/react-logo.png')} style={styles.biglogo}/>
+      </TouchableOpacity>
     </View>
   );
 };
