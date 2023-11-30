@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { useEffect } from 'react';
 import { Text, View, StyleSheet } from 'react-native';
 
 import configData from "../config.json";
