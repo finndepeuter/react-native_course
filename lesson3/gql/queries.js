@@ -13,7 +13,7 @@ export const GET_CONTINENTS = gql`
 export const GET_COUNTRIES = gql`
   query GetCountries {
     countries (
-      order_by: {naam: asc}
+      order_by: {name: asc}
     ){
       name
       capital
@@ -31,7 +31,7 @@ export const GET_CONTINENTS_COUNTRIES = gql`
       id
       code
       name
-      countries {
+      data: countries {
         code
         name
         capital
