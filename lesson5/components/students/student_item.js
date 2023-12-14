@@ -1,10 +1,10 @@
 import { Text, Pressable, StyleSheet } from 'react-native';
 
-export default function StudentItem() {
+export default function StudentItem({ student, onPress }) {
   return (
-    <Pressable style={styles.container}>
-      <Text style={styles.circle}>A</Text>
-      <Text style={styles.name}>firstname lastname</Text>
+    <Pressable style={styles.container} onPress={() => onPress(student)}>
+      <Text style={styles.circle}>{student.lastname.charAt(0).toUpperCase()}</Text>
+      <Text style={styles.name}>{student.firstname} {student.lastname}</Text>
     </Pressable>
   );
 };

@@ -16,11 +16,20 @@ export default function StudentsListScreen({ navigation }) {
   if (loading) return <Fetching />
   if (error) return <Error error={error} />
 
+
+  function handleDetails(student) {
+    navigation.navigate('StudentsDetails', { id: student.id });
+  }
+  
+  function handleInsert() {
+    navigation.navigate('StudentsDetails', { id: 0 });
+  }
+
   return (
     <View style={styles.container}>
       <FlatList
         data={data.students}
-        renderItem={({ item }) => <StudentItem student={item} />}
+        renderItem={({ item }) => <StudentItem student={item} onPress={handleDetails} />}
         keyExtractor={(item, index) => index}
         ItemSeparatorComponent={Separator}
       />
@@ -29,6 +38,7 @@ export default function StudentsListScreen({ navigation }) {
         size="large"
         placement="right"
         color="tomato"
+        onPress={handleInsert} 
       />
     </View>
   );

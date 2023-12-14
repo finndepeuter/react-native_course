@@ -36,6 +36,16 @@ const client = new ApolloClient({
 const Stack = createNativeStackNavigator()
 const Tab = createBottomTabNavigator();
 
+const StudentsStack = createNativeStackNavigator();
+
+  function StudentsScreen() {
+    return (
+      <StudentsStack.Navigator>
+        <StudentsStack.Screen name="StudentsList" component={StudentsListScreen} options={{ title: 'Students' }}/>
+        <StudentsStack.Screen name="StudentsDetails" component={StudentsDetailsScreen} options={{ title: 'Details' }}/>
+      </StudentsStack.Navigator>
+    );
+  }
 const theme = createTheme({
   lightColors: {
     primary: 'tomato',
@@ -80,7 +90,7 @@ export default function App() {
             })}
           >
             <Tab.Screen name="Welcome" component={WelcomeScreen} />
-            <Tab.Screen name="Students" component={TodoScreen} />
+            <Tab.Screen name="Students" component={StudentsScreen} options={{headerShown: false}}/>
             <Tab.Screen name="Courses" component={TodoScreen} />
             <Tab.Screen name="Enrollments" component={TodoScreen} />
           </Tab.Navigator>

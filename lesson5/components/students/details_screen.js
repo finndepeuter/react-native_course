@@ -9,16 +9,43 @@ import Error from '../layout/message_error';
 import { useQuery, useMutation } from "@apollo/client";
 import { GET_STUDENTS, GET_STUDENT, INSERT_STUDENT, UPDATE_STUDENT, DELETE_STUDENT } from "../../gql/students/queries";
 
-export default function StudentsDetailsScreen() {
+export default function StudentsDetailsScreen({ route, navigation }) {
+  const { id } = route.params;
   const [student, setStudent] = useState({ id: 0, firstname: '', lastname: '' });
+  const { data, loading, error } = useQuery(GET_STUDENT, { variables: { id }, skip: id === 0 });
+
+  const [insertStudent] = useMutation(INSERT_STUDENT, {
+    refetchQueries: [
+      { query: GET_STUDENTS }
+    ],
+  });
+  
+  const [updateStudent] = useMutation(UPDATE_STUDENT, {
+    refetchQueries: [
+      { query: GET_STUDENTS }
+    ],
+  });
+  
+  const [deleteStudent] = useMutation(DELETE_STUDENT, {
+    refetchQueries: [
+      { query: GET_STUDENTS }
+    ],
+  });
+
 
   function handleInsert() {
+    insertStudent({ variables: { firstname: student.firstname, lastname: student.lastname } });
+    navigation.goBack();
   }
 
   function handleUpdate() {
+    updateStudent({ variables: { id: student.id, firstname: student.firstname, lastname: student.lastname } });
+    navigation.goBack();
   }
 
   function handleDelete() {
+    deleteStudent({ variables: { id: student.id } });
+    navigation.goBack();
   }
 
   if (loading) return <Fetching />
@@ -31,6 +58,13 @@ export default function StudentsDetailsScreen() {
   function handleChangeLastname(value) {
     setStudent({ ...student, lastname: value });
   }
+
+  useEffect(() => {
+    if (data) {
+      setStudent(data.students_by_pk);
+    }
+  }, [data]);
+   
 
   return (
     <View style={styles.container}>
