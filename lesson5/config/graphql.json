@@ -1,0 +1,4 @@
+{
+    "qlendpoint": "https://...hasura.app/v1/graphql",
+    "qlkey": "..."
+}
