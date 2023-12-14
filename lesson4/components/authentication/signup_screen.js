@@ -3,6 +3,11 @@ import { useState } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { Input, Button } from '@rneui/themed';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import '../../config/firebase';
+
+import { getAuth, createUserWithEmailAndPassword } from 'firebase/auth';
+
+const auth = getAuth();
 
 export default function SignUpScreen() {
   const [value, setValue] = useState({
@@ -10,6 +15,25 @@ export default function SignUpScreen() {
     password: '',
     error: ''
   });
+
+  async function signUp() {
+    if (value.email === '' || value.password === '') {
+      setValue({
+        ...value,
+        error: 'Email and password are mandatory.'
+      })
+      return;
+    }
+
+    try {
+      await createUserWithEmailAndPassword(auth, value.email, value.password);
+    } catch (error) {
+      setValue({
+        ...value,
+        error: error.message,
+      })
+    }
+  }
 
   return (
     <View style={styles.container}>
@@ -38,7 +62,7 @@ export default function SignUpScreen() {
         />}
       />
 
-      <Button title="Sign up" buttonStyle={styles.control} />
+      <Button title="Sign up" buttonStyle={styles.control} onPress={signUp} />
     </View>
   );
 }

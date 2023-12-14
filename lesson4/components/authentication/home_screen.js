@@ -5,8 +5,8 @@ export default function HomeScreen({ navigation }) {
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Home screen!</Text>
-      <Button title="Sign in" buttonStyle={styles.button} />
-      <Button title="Sign up" type="outline" buttonStyle={styles.button} />
+      <Button title="Sign in" buttonStyle={styles.button} onPress={() => navigation.navigate('Sign In')} />
+      <Button title="Sign up" type="outline" buttonStyle={styles.button} onPress={() => navigation.navigate('Sign Up')} />
     </View>
   );
 }
