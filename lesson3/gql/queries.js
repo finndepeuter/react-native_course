@@ -43,3 +43,19 @@ export const GET_CONTINENTS_COUNTRIES = gql`
     }
   }
 `;
+
+export const GET_FILTERED_COUNTRIES = gql`
+  query GetFilteredCountries($filter: String!) {
+    countries (
+      where: { name: { _ilike: $filter } }
+      order_by: { name: asc }
+    ){
+      name
+      capital
+      emoji
+      continent {
+        name
+      }
+    }
+  }
+`;
