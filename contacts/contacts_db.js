@@ -123,7 +123,7 @@ export default class ContactsDB {
     });
   }
 
-  static insertContact(contact) {
+  static insertContact(contact = { name: "", categoryid: null, tel: ''}) {
     return new Promise((resolve) => {
       db.transaction((tx) => {
         tx.executeSql(

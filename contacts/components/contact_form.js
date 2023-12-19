@@ -14,18 +14,36 @@ export default function ContactForm() {
 
   function handleNameChange(value) {
     // update name in contacts, do not mutate array!
+    setContacts(prevContacts => {
+      const updatedContacts = [...prevContacts];
+      updatedContacts[index] = {...updatedContacts[index], name: value};
+      return updatedContacts;
+    })
   }
 
   function handleCategoryidChange(value) {
     // update category in contacts, do not mutate array!
+    setContacts(prevContacts => {
+      const updatedContacts = [...prevContacts];
+      updatedContacts[index] = { ...updatedContacts[index], categoryid: value };
+      return updatedContacts;
+    })
   }
 
   function handleTelChange(value) {
     // update tel in contacts, do not mutate array!
+    setContacts(prevContacts => {
+      const updatedContacts = [...prevContacts];
+      updatedContacts[index] = { ...updatedContacts[index], tel: value };
+      return updatedContacts;
+    });
   }
 
   function handlePrevious() {
     // scroll to previous contact (if not first), use index
+    if (index > 0) {
+      setIndex(prevIndex => prevIndex - 1);
+    }
   }
 
   function handlePhone() {
@@ -34,22 +52,78 @@ export default function ContactForm() {
 
   function handleNext() {
     // scroll to next contact (if any left), use index
+    if (index < contacts.length - 1) {
+      setIndex(prevIndex => prevIndex + 1);
+    }
   }
 
-  function handleAdd() {
+  async function handleAdd() {
     // insert a new empty contact in db
+    const newContact = await ContactsDB.insertContact();
+
+  if (newContact) {
+    // Update the contacts state with the new contact
+    setContacts(prevContacts => [...prevContacts, newContact]);
+
+    // Set the index to the newly added contact
+    setIndex(prevIndex => prevIndex + 1);
+
+    console.log('New contact added successfully:', newContact);
+  } else {
+    console.error('Failed to add a new contact.');
+  }
   }
 
-  function handleUpdate() {
+  async function handleUpdate() {
     // update current contact in db
+    const currentContact = contacts[index];
+
+    await ContactsDB.updateContact(currentContact);
+
+    const updatedContacts = await ContactsDB.getContacts();
+    setContacts(updatedContacts);
+    console.log('Contact updated succesfully')
   }
 
-  function handleDelete() {
+  async function handleDelete() {
     // delete current contact from db
+    // Get the current contact
+    const currentContact = contacts[index];
+
+    // Delete the contact from the database
+    await ContactsDB.deleteContact(currentContact.id);
+
+    // Optionally, you may want to refresh the contacts from the database
+    const updatedContacts = await ContactsDB.getAllContacts();
+    setContacts(updatedContacts);
+
+    // Show the first contact after deletion
+    setIndex(0);
+
+    // Log success or perform any additional actions
+    console.log('Contact deleted successfully!');
   }
 
   useEffect(() => {
     // read all contacts and categories
+    const fetchData = async () => {
+      try {
+        // Read all categories and contacts from the database
+        const allCategories = await ContactsDB.getCategories();
+        const allContacts = await ContactsDB.getContacts();
+
+        // Set categories and contacts in state
+        setCategories(allCategories);
+        setContacts(allContacts);
+
+        // Set index to 0
+        setIndex(0);
+      } catch (error) {
+        console.error('Error fetching data from the database:', error);
+      }
+    };
+
+    fetchData();
   }, []);
 
   return (
