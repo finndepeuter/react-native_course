@@ -24,6 +24,8 @@ import { LogBox } from 'react-native';
 LogBox.ignoreLogs(['AsyncStorage has been extracted from react-native core']);
 
 import configData from "./config/graphql.json";
+import CoursesListScreen from './components/courses/list_screen';
+import CoursesDetailsScreen from './components/courses/details_screen';
 
 const client = new ApolloClient({
   uri: configData.qlendpoint,
@@ -54,6 +56,17 @@ const theme = createTheme({
     primary: '#000',
   },
 });
+
+const CoursesStack = createNativeStackNavigator();
+
+  function CoursesScreen() {
+    return (
+      <CoursesStack.Navigator>
+        <CoursesStack.Screen name='CoursesList' component={CoursesListScreen} options={{ title: 'Courses' }}/>
+        <CoursesStack.Screen name='CourseDetails' component={CoursesDetailsScreen} options={{ title: 'Details' }}/>
+      </CoursesStack.Navigator>
+    )
+  }
 
 export default function App() {
   const { user } = useAuthentication();
@@ -91,7 +104,7 @@ export default function App() {
           >
             <Tab.Screen name="Welcome" component={WelcomeScreen} />
             <Tab.Screen name="Students" component={StudentsScreen} options={{headerShown: false}}/>
-            <Tab.Screen name="Courses" component={TodoScreen} />
+            <Tab.Screen name="Courses" component={CoursesScreen} options={{headerShown: false}} />
             <Tab.Screen name="Enrollments" component={TodoScreen} />
           </Tab.Navigator>
 

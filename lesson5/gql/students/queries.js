@@ -51,3 +51,4 @@ export const INSERT_STUDENT = gql`
     }
   }
 `;
+
