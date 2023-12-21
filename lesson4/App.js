@@ -10,7 +10,17 @@ import { useAuthentication } from './hooks/use_authentication';
 
 //import { LogBox } from 'react-native';
 //LogBox.ignoreLogs(['AsyncStorage has been extracted from react-native core']);
+import { ApolloClient, InMemoryCache, ApolloProvider, gql, useQuery } from '@apollo/client';
 
+import configData from "./config/graphql.json";
+
+const client = new ApolloClient({
+  uri: configData.qlendpoint,
+  headers: {
+    'x-hasura-admin-secret': configData.qlkey
+  },
+  cache: new InMemoryCache()
+});
 const Stack = createNativeStackNavigator();
 
 const theme = createTheme({
@@ -28,6 +38,7 @@ export default function App() {
   const { user } = useAuthentication();
 
   return (
+    <ApolloProvider client={client}>
     <ThemeProvider theme={theme}>
       <NavigationContainer>
         {user ?
@@ -43,6 +54,7 @@ export default function App() {
         }
       </NavigationContainer>
     </ThemeProvider>
+    </ApolloProvider>
   );
 }
 
