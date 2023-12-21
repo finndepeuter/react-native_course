@@ -194,4 +194,18 @@ export default class UsaDB {
     });
   }
 
+  static getParties() {
+    return new Promise((resolve) => {
+      db.transaction((tx) => {
+        tx.executeSql(
+          "SELECT * FROM party",
+          [],
+          (tx, { rows }) => {
+            resolve(rows._array);
+          }
+        );
+      });
+    });
+  }
+
 }
