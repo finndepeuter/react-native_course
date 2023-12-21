@@ -1,19 +1,19 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, TouchableOpacity, Image, StyleSheet } from 'react-native'
+import { View, Text, TouchableOpacity, Image, StyleSheet, ImageBackground } from 'react-native'
 import { countries } from '../data';
 
 // pick random countries function
 function pick3RandomCountries(countries) {
-    const allCountries = [...countries];
-    let the3Countries = [];
-  
-    for (let i = 0; i < 3; i++) {
-      let randomPosition = Math.floor(allCountries.length * Math.random());
-      let randomCountry = allCountries.splice(randomPosition, 1);
-      the3Countries.push(...randomCountry);
-    }
-  
-    return the3Countries;
+  const allCountries = [...countries];
+  let the3Countries = [];
+
+  for (let i = 0; i < 3; i++) {
+    let randomPosition = Math.floor(allCountries.length * Math.random());
+    let randomCountry = allCountries.splice(randomPosition, 1)[0];
+    the3Countries.push(randomCountry);
+  }
+
+  return the3Countries;
 }
 
 export default function Game() {
@@ -29,13 +29,13 @@ export default function Game() {
 
     // next country function
     function nextCountry() {
-        const randomCountries = pick3RandomCountries(countries.name);
-        const randomCountry = randomCountries[Math.floor(Math.random() * 3)];
-        setFlags(randomCountries);
-        setCountry(randomCountry);
+      const randomCountries = pick3RandomCountries(countries);
+      const randomCountry = randomCountries[Math.floor(Math.random() * 3)];
+      setFlags(randomCountries);
+      setCountry(randomCountry.name);
     };
 
-    function handleOnPress() {
+    function handleOnPress(selectedCountry) {
         if (selectedCountry === country) {
             // User selected the correct country, increase score
             setScore(score + 1);
@@ -53,7 +53,14 @@ export default function Game() {
       <View style={styles.imagecontainer}>
         {flags.map((flag, index) => (
           <TouchableOpacity key={index} onPress={() => handleOnPress(flag.name)}>
-            <Image source={flag.image} style={styles.smalllogo} />
+            {/* <Image source={flag.image} style={styles.smalllogo} /> */}
+            <ImageBackground
+              source={flag.image}
+              style={styles.smalllogo}
+              resizeMode="cover"
+            >
+              {/* You can add any additional styling or components here */}
+            </ImageBackground>
           </TouchableOpacity>
         ))}
       </View>
