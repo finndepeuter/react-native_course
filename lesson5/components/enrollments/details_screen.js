@@ -39,8 +39,8 @@ export default function EnrollmentsDetailsScreen({ route, navigation }) {
     console.log("Courses Error:", coursesError);
 
     if (data) {
-      console.log("Enrollment Data:", data.enrollments_by_pk);
       setEnrollment(data.enrollments_by_pk);
+      console.log("enrollemnt:", enrollment)
     }
   }, [data, studentsData, coursesData, studentsLoading, coursesLoading, studentsError, coursesError]);
 
@@ -112,7 +112,7 @@ export default function EnrollmentsDetailsScreen({ route, navigation }) {
           <>
             <Picker.Item label="Select Student" value={0} />
             {studentsData.students.map(student => (
-              <Picker.Item key={student.id} label={`${student.firstname} ${student.lastname}`} value={student.id} />
+              <Picker.Item key={student.id} label={`${student.firstname} ${student.lastname}`} value={student.id}  style={{ fontSize: 14 }}/>
             ))}
           </>
         ) : (
@@ -131,7 +131,7 @@ export default function EnrollmentsDetailsScreen({ route, navigation }) {
           <>
             <Picker.Item label="Select Course" value={0} />
             {coursesData.courses.map(course => (
-              <Picker.Item key={course.id} label={course.title} value={course.id} />
+              <Picker.Item key={course.id} label={course.title} value={course.id}  style={{ fontSize: 14 }}/>
             ))}
           </>
         ) : (
