@@ -17,6 +17,9 @@ import TodoScreen from './components/todo_screen';
 import StudentsListScreen from './components/students/list_screen';
 import StudentsDetailsScreen from './components/students/details_screen';
 
+import EnrollmentsListScreen from './components/enrollments/list_screen';
+import EnrollmentsDetailsScreen from './components/enrollments/details_screen';
+
 import './config/firebase';
 import { useAuthentication } from './hooks/use_authentication';
 
@@ -26,6 +29,13 @@ LogBox.ignoreLogs(['AsyncStorage has been extracted from react-native core']);
 import configData from "./config/graphql.json";
 import CoursesListScreen from './components/courses/list_screen';
 import CoursesDetailsScreen from './components/courses/details_screen';
+
+import { loadErrorMessages, loadDevMessages } from "@apollo/client/dev";
+
+if (__DEV__) {  // Adds messages only in a dev environment
+  loadDevMessages();
+  loadErrorMessages();
+}
 
 const client = new ApolloClient({
   uri: configData.qlendpoint,
@@ -48,6 +58,7 @@ const StudentsStack = createNativeStackNavigator();
       </StudentsStack.Navigator>
     );
   }
+
 const theme = createTheme({
   lightColors: {
     primary: 'tomato',
@@ -65,6 +76,17 @@ const CoursesStack = createNativeStackNavigator();
         <CoursesStack.Screen name='CoursesList' component={CoursesListScreen} options={{ title: 'Courses' }}/>
         <CoursesStack.Screen name='CourseDetails' component={CoursesDetailsScreen} options={{ title: 'Details' }}/>
       </CoursesStack.Navigator>
+    )
+  }
+
+const EnrollmentsStack = createNativeStackNavigator();
+
+  function EnrollmentsScreen() {
+    return (
+      <EnrollmentsStack.Navigator>
+        <EnrollmentsStack.Screen name='EnrollmentsList' component={EnrollmentsListScreen} options={{ title: 'Enrollments' }}/>
+        <EnrollmentsStack.Screen name='EnrollmentDetails' component={EnrollmentsDetailsScreen} options={{ title: 'Details' }}/>
+      </EnrollmentsStack.Navigator>
     )
   }
 
@@ -105,7 +127,7 @@ export default function App() {
             <Tab.Screen name="Welcome" component={WelcomeScreen} />
             <Tab.Screen name="Students" component={StudentsScreen} options={{headerShown: false}}/>
             <Tab.Screen name="Courses" component={CoursesScreen} options={{headerShown: false}} />
-            <Tab.Screen name="Enrollments" component={TodoScreen} />
+            <Tab.Screen name="Enrollments" component={EnrollmentsScreen} options={{headerShown: false}} />
           </Tab.Navigator>
 
           :
