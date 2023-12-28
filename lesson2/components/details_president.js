@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { TouchableOpacity, View, Text, TextInput, FlatList, StyleSheet } from 'react-native';
 import UsaDB from '../usa_db';
+import { Picker } from '@react-native-picker/picker';
 
 export default function DetailsPresident({ route, navigation }) {
   const { id } = route.params;
   const [president, setPresident] = useState({ id: 0, name: '', term: '', party: '' });
-  const [showPartyDropdown, setShowPartyDropdown] = useState(false);
   const [parties, setParties] = useState([]);
 
   useEffect(() => {
@@ -13,17 +13,21 @@ export default function DetailsPresident({ route, navigation }) {
       const partyData = await UsaDB.getParties();
       setParties(partyData);
     }
-
-    if (id !== 0) {
-      getPresidentById(id);
-    }
-    fetchParties();
-  }, []);
-  async function getPresidentById(id) {
-    const result = await UsaDB.getPresidentById(id);
-    setPresident(result);
-  }
   
+    async function fetchPresidentData() {
+      let presidentData = { id: 0, name: '', term: '', party: '' };
+  
+      if (id !== 0) {
+        presidentData = await UsaDB.getPresidentById(id);
+      }
+  
+      setPresident(presidentData);
+    }
+  
+    fetchParties();
+    fetchPresidentData();
+  }, [id]);
+
   function handleChangeName(value) {
     setPresident({ ...president, name: value });
   }
@@ -32,9 +36,8 @@ export default function DetailsPresident({ route, navigation }) {
     setPresident({ ...president, term: value });
   }
 
-  function handlePartyPress(selectedParty) {
+  function handleChangeParty(selectedParty) {
     setPresident({ ...president, party: selectedParty });
-    setShowPartyDropdown(false);
   }
 
   async function updatePresident(president) {
@@ -80,28 +83,17 @@ export default function DetailsPresident({ route, navigation }) {
         placeholder="Term"
       />
 
-      {/* Display selected party */}
-      <TouchableOpacity
-        style={styles.input}
-        onPress={() => setShowPartyDropdown(!showPartyDropdown)}
-      >
-        <Text>{president.party || 'Select Party'}</Text>
-      </TouchableOpacity>
-
       {/* Party selection dropdown */}
-      {showPartyDropdown && (
-        <View style={styles.dropdownContainer}>
-          <FlatList
-            data={parties}
-            keyExtractor={(item) => item.id.toString()}
-            renderItem={({ item }) => (
-              <TouchableOpacity onPress={() => handlePartyPress(item.name)}>
-                <Text style={styles.dropdownItem}>{item.name}</Text>
-              </TouchableOpacity>
-            )}
-          />
-        </View>
-      )}
+      <Picker
+        selectedValue={president.party}
+        onValueChange={handleChangeParty}
+        style={styles.input}
+      >
+        <Picker.Item label="Select Party" value="" style={{ fontSize: 14 }} />
+        {parties.map((party) => (
+          <Picker.Item key={party.id} label={party.name} value={party.name} style={{ fontSize: 14 }} />
+        ))}
+      </Picker>
 
       {id !== 0 &&
         <>
