@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { View, TextInput, StyleSheet, Picker } from 'react-native';
+import { View, TextInput, StyleSheet, ActivityIndicator } from 'react-native';
 import { Button } from '@rneui/themed';
+import { Picker } from '@react-native-picker/picker';
 import { useQuery, useMutation } from "@apollo/client";
 import {
   GET_ENROLLMENTS,
@@ -21,11 +22,27 @@ export default function EnrollmentsDetailsScreen({ route, navigation }) {
   const { data: studentsData, loading: studentsLoading, error: studentsError } = useQuery(GET_STUDENTS);
   const { data: coursesData, loading: coursesLoading, error: coursesError } = useQuery(GET_COURSES);
 
+
+  // useEffect(() => {
+  //   if (data) {
+  //     setEnrollment(data.enrollments_by_pk);
+  //   }
+  // }, [data, studentsData, coursesData]);
+
   useEffect(() => {
+    console.log("Students Data:", studentsData.students);
+    console.log("Students Loading:", studentsLoading);
+    console.log("Students Error:", studentsError);
+
+    console.log("Courses Data:", coursesData.courses);
+    console.log("Courses Loading:", coursesLoading);
+    console.log("Courses Error:", coursesError);
+
     if (data) {
+      console.log("Enrollment Data:", data.enrollments_by_pk);
       setEnrollment(data.enrollments_by_pk);
     }
-  }, [data]);
+  }, [data, studentsData, coursesData, studentsLoading, coursesLoading, studentsError, coursesError]);
 
   const [insertEnrollment] = useMutation(INSERT_ENROLLMENT, {
     refetchQueries: [
@@ -91,13 +108,15 @@ export default function EnrollmentsDetailsScreen({ route, navigation }) {
           <Picker.Item label="Loading Students..." value={0} />
         ) : studentsError ? (
           <Picker.Item label="Error loading students" value={0} />
-        ) : (
+        ) : studentsData && studentsData.students ? (
           <>
             <Picker.Item label="Select Student" value={0} />
             {studentsData.students.map(student => (
               <Picker.Item key={student.id} label={`${student.firstname} ${student.lastname}`} value={student.id} />
             ))}
           </>
+        ) : (
+          <Picker.Item label="No Students available" value={0} />
         )}
       </Picker>
       <Picker
@@ -108,13 +127,15 @@ export default function EnrollmentsDetailsScreen({ route, navigation }) {
           <Picker.Item label="Loading Courses..." value={0} />
         ) : coursesError ? (
           <Picker.Item label="Error loading courses" value={0} />
-        ) : (
+        ) : coursesData && coursesData.courses ? (
           <>
             <Picker.Item label="Select Course" value={0} />
             {coursesData.courses.map(course => (
               <Picker.Item key={course.id} label={course.title} value={course.id} />
             ))}
           </>
+        ) : (
+          <Picker.Item label="No Courses available" value={0} />
         )}
       </Picker>
       {id !== 0 &&
