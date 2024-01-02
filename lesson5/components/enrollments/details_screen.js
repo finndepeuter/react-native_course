@@ -101,42 +101,24 @@ export default function EnrollmentsDetailsScreen({ route, navigation }) {
         value={enrollment.grade}
       />
       <Picker
-        selectedValue={enrollment.studentId}
+        selectedValue={enrollment.studentId || 0}
         onValueChange={handleChangeStudent}
+        style={styles.input}
       >
-        {studentsLoading ? (
-          <Picker.Item label="Loading Students..." value={0} />
-        ) : studentsError ? (
-          <Picker.Item label="Error loading students" value={0} />
-        ) : studentsData && studentsData.students ? (
-          <>
-            <Picker.Item label="Select Student" value={0} />
+            {/* <Picker.Item label="Select Student" value={0} /> */}
             {studentsData.students.map(student => (
               <Picker.Item key={student.id} label={`${student.firstname} ${student.lastname}`} value={student.id}  style={{ fontSize: 14 }}/>
             ))}
-          </>
-        ) : (
-          <Picker.Item label="No Students available" value={0} />
-        )}
       </Picker>
       <Picker
-        selectedValue={enrollment.courseId}
+        selectedValue={enrollment.courseId || 0}
         onValueChange={handleChangeCourse}
+        style={styles.input}
       >
-        {coursesLoading ? (
-          <Picker.Item label="Loading Courses..." value={0} />
-        ) : coursesError ? (
-          <Picker.Item label="Error loading courses" value={0} />
-        ) : coursesData && coursesData.courses ? (
-          <>
-            <Picker.Item label="Select Course" value={0} />
+            {/* <Picker.Item label="Select Course" value={0} /> */}
             {coursesData.courses.map(course => (
               <Picker.Item key={course.id} label={course.title} value={course.id}  style={{ fontSize: 14 }}/>
             ))}
-          </>
-        ) : (
-          <Picker.Item label="No Courses available" value={0} />
-        )}
       </Picker>
       {id !== 0 &&
         <>
