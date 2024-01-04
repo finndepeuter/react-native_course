@@ -2,12 +2,40 @@ import { Image, TouchableOpacity, View, Text, Pressable, StyleSheet } from 'reac
 import { Ionicons } from "@expo/vector-icons";
 
 import { beverages } from '../images/beverages';
+import { useRecoilState } from 'recoil';
+import { orderListState } from '../store';
 
 export default function BeverageItem({ beverage }) {
+  const beverageImage = beverages.find((item) => item.name === beverage.name)?.image;
+
+  const [orderList, setOrderList] = useRecoilState(orderListState);
+
+  const addToOrderList = () => {
+    const existingBeverage = orderList.find((item) => item.id === beverage.id);
+
+    if (existingBeverage) {
+      // If the beverage is already in the order list, update the count
+      const updatedOrderList = orderList.map((item) =>
+        item.id === beverage.id ? { ...item, count: item.count + 1 } : item
+      );
+      setOrderList(updatedOrderList);
+    } else {
+      // If the beverage is not in the order list, add it with count=1
+      setOrderList([...orderList, { ...beverage, count: 1 }]);
+    }
+  };
+  console.log(orderList)
 
   return (
     <Pressable style={styles.container}>
-      <Text style={styles.name}>{beverage.name}</Text>
+      <Image source={beverageImage} style={styles.image}></Image>
+      <View style={styles.column}>
+        <Text style={styles.name}>{beverage.name}</Text>
+        <Text style={styles.price}>€ {beverage.price}</Text>
+      </View>
+      <TouchableOpacity style={styles.circle} onPress={addToOrderList}>
+        <Ionicons name="add" style={styles.plus}/>
+      </TouchableOpacity>
     </Pressable>
   );
 };
