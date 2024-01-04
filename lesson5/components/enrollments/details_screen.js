@@ -39,7 +39,14 @@ export default function EnrollmentsDetailsScreen({ route, navigation }) {
     console.log("Courses Error:", coursesError);
 
     if (data) {
-      setEnrollment(data.enrollments_by_pk);
+      // setEnrollment(data.enrollments_by_pk);
+      const { id, grade, student, course } = data.enrollments_by_pk;
+      setEnrollment({
+      id,
+      grade,
+      studentId: student.id, // Extracting studentId from the student object
+      courseId: course.id, // Extracting courseId from the course object
+    });
       console.log("enrollemnt:", enrollment)
     }
   }, [data, studentsData, coursesData, studentsLoading, coursesLoading, studentsError, coursesError]);
