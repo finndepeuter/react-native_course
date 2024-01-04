@@ -7,6 +7,7 @@ export default function DetailsPresident({ route, navigation }) {
   const { id } = route.params;
   const [president, setPresident] = useState({ id: 0, name: '', term: '', party: '' });
   const [parties, setParties] = useState([]);
+  const [selectedParty, setSelectedParty] = useState("");
 
   useEffect(() => {
     async function fetchParties() {
@@ -26,7 +27,7 @@ export default function DetailsPresident({ route, navigation }) {
   
     fetchParties();
     fetchPresidentData();
-  }, [id]);
+  }, [id, selectedParty]);
 
   function handleChangeName(value) {
     setPresident({ ...president, name: value });
@@ -36,7 +37,8 @@ export default function DetailsPresident({ route, navigation }) {
     setPresident({ ...president, term: value });
   }
 
-  function handleChangeParty(selectedParty) {
+  function handleChangeParty(value) {
+    setSelectedParty(value);
     setPresident({ ...president, party: selectedParty });
   }
 
@@ -85,11 +87,11 @@ export default function DetailsPresident({ route, navigation }) {
 
       {/* Party selection dropdown */}
       <Picker
-        selectedValue={president.party}
+        selectedValue={selectedParty}
         onValueChange={handleChangeParty}
         style={styles.input}
       >
-        <Picker.Item label="Select Party" value="" style={{ fontSize: 14 }} />
+        {/* <Picker.Item label="Select Party" value="" style={{ fontSize: 14 }} /> */}
         {parties.map((party) => (
           <Picker.Item key={party.id} label={party.name} value={party.name} style={{ fontSize: 14 }} />
         ))}

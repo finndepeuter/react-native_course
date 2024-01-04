@@ -4,11 +4,11 @@ import { StatusBar, StyleSheet, View } from 'react-native';
 //import FixedDimensions from './components/height_and_width';
 //import FlexDimensions from './components/height_and_width';
 //import PercentageDimensions from './components/height_and_width';
-// import FlexStyles from './components/flex_styles';
-//import Buttons from './components/buttons';
+import FlexStyles from './components/flex_styles';
+// import Buttons from './components/buttons';
 // import UserInput from './components/user_input';
 //import ScrollStudents from './components/scroll_students';
-import Images from './components/images';
+//import Images from './components/images';
 
 export default function App() {
   return (
@@ -16,11 +16,11 @@ export default function App() {
       {/* <LotsOfStyles/> */}
       {/* <FixedDimensions/> */}
       {/* <PercentageDimensions/> */}
-      {/* <FlexStyles/> */}
+      <FlexStyles/>
       {/* <Buttons/> */}
       {/* <UserInput/> */}
       {/* <ScrollStudents/> */}
-      <Images/>
+      {/* <Images/> */}
       <StatusBar style="auto" />
     </View>
   );
