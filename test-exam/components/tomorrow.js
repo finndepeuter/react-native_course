@@ -30,7 +30,7 @@ export default function Tomorrow() {
       <Image source={{uri :configData.weatherapi + "static/" + forecast.weather[0].icon + ".png"}}
              style={styles.biglogo}/>
       <Text style={styles.city}>Geel - {formatdate}</Text>
-      <Text style={styles.name}>{'\u00A9'} name</Text>
+      <Text style={styles.name}>{'\u00A9'} Finn De Peuter</Text>
     </View>
   );
 };
