@@ -43,8 +43,8 @@ export const UPDATE_ENROLLMENT = gql`
             pk_columns: { id: $id }
             _set: { 
                 grade: $grade, 
-                course_id: $courseId,  # Assuming your enrollment table has a field named course_id for the course
-                student_id: $studentId  # Assuming your enrollment table has a field named student_id for the student
+                course_id: $courseId,  
+                student_id: $studentId  
             }
         ) {
             id

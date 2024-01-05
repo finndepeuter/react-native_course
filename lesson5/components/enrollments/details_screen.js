@@ -21,14 +21,10 @@ export default function EnrollmentsDetailsScreen({ route, navigation }) {
   const { data, loading, error } = useQuery(GET_ENROLLMENT, { variables: { id }, skip: id === 0 });
   const { data: studentsData, loading: studentsLoading, error: studentsError } = useQuery(GET_STUDENTS);
   const { data: coursesData, loading: coursesLoading, error: coursesError } = useQuery(GET_COURSES);
+  //const grades = ["F", "D","C", "B", "A", "A+" ];
 
 
-  // useEffect(() => {
-  //   if (data) {
-  //     setEnrollment(data.enrollments_by_pk);
-  //   }
-  // }, [data, studentsData, coursesData]);
-
+  // fetch the data in the beginning and when the data changes
   useEffect(() => {
     console.log("Students Data:", studentsData.students);
     console.log("Students Loading:", studentsLoading);
@@ -47,10 +43,11 @@ export default function EnrollmentsDetailsScreen({ route, navigation }) {
       studentId: student.id, // Extracting studentId from the student object
       courseId: course.id, // Extracting courseId from the course object
     });
-      console.log("enrollemnt:", enrollment)
+      console.log("enrollment:", enrollment)
     }
   }, [data, studentsData, coursesData, studentsLoading, coursesLoading, studentsError, coursesError]);
 
+  // mutations
   const [insertEnrollment] = useMutation(INSERT_ENROLLMENT, {
     refetchQueries: [
       { query: GET_ENROLLMENTS }
@@ -69,6 +66,7 @@ export default function EnrollmentsDetailsScreen({ route, navigation }) {
     ],
   });
 
+  // functions
   function handleInsert() {
     insertEnrollment({ variables: { grade: enrollment.grade, courseId: enrollment.courseId, studentId: enrollment.studentId } });
     navigation.goBack();
@@ -112,7 +110,7 @@ export default function EnrollmentsDetailsScreen({ route, navigation }) {
         onValueChange={handleChangeStudent}
         style={styles.input}
       >
-            {/* <Picker.Item label="Select Student" value={0} /> */}
+            <Picker.Item label="Select Student" value={0} />
             {studentsData.students.map(student => (
               <Picker.Item key={student.id} label={`${student.firstname} ${student.lastname}`} value={student.id}  style={{ fontSize: 14 }}/>
             ))}
@@ -122,7 +120,7 @@ export default function EnrollmentsDetailsScreen({ route, navigation }) {
         onValueChange={handleChangeCourse}
         style={styles.input}
       >
-            {/* <Picker.Item label="Select Course" value={0} /> */}
+            <Picker.Item label="Select Course" value={0} />
             {coursesData.courses.map(course => (
               <Picker.Item key={course.id} label={course.title} value={course.id}  style={{ fontSize: 14 }}/>
             ))}

@@ -10,10 +10,12 @@ import { useQuery, useMutation } from "@apollo/client";
 import { GET_STUDENTS, GET_STUDENT, INSERT_STUDENT, UPDATE_STUDENT, DELETE_STUDENT } from "../../gql/students/queries";
 
 export default function StudentsDetailsScreen({ route, navigation }) {
+  // variables
   const { id } = route.params;
   const [student, setStudent] = useState({ id: 0, firstname: '', lastname: '' });
   const { data, loading, error } = useQuery(GET_STUDENT, { variables: { id }, skip: id === 0 });
 
+  // mutations
   const [insertStudent] = useMutation(INSERT_STUDENT, {
     refetchQueries: [
       { query: GET_STUDENTS }
@@ -32,7 +34,7 @@ export default function StudentsDetailsScreen({ route, navigation }) {
     ],
   });
 
-
+  // functions
   function handleInsert() {
     insertStudent({ variables: { firstname: student.firstname, lastname: student.lastname } });
     navigation.goBack();
@@ -59,6 +61,7 @@ export default function StudentsDetailsScreen({ route, navigation }) {
     setStudent({ ...student, lastname: value });
   }
 
+  // fetch students in the beginning and every data reload
   useEffect(() => {
     if (data) {
       setStudent(data.students_by_pk);
