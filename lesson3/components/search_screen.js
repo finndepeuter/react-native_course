@@ -9,9 +9,14 @@ export default function SearchScreen() {
   const [searchFilter, setSearchFilter] = useState('');
   const [getFilteredCountries, { loading, data, error }] = useLazyQuery(GET_FILTERED_COUNTRIES);
 
+  // modify the filter as it doesn't work in graphql itself to work with wildcards
+  const filter = searchFilter;
+  const modifiedFilter = `${filter}%`;
+
+  // use wildcard filter to search
   useEffect(() => {
     getFilteredCountries({
-      variables: { filter: searchFilter},
+      variables: { filter: modifiedFilter},
     })
   }, [searchFilter, getFilteredCountries]);
 
