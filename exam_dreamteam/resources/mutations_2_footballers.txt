@@ -1,0 +1,96 @@
+mutation {
+  insert_footballers(objects: [
+    {
+      firstname: "Franz",
+      lastname: "Beckenbauer",
+      position: "fieldplayer",
+      nationality_id: 4
+    },
+    {
+      firstname: "Iker",
+      lastname: "Casillas",
+      position: "goalkeeper",
+      nationality_id: 3
+    },
+    {
+      firstname: "Jean-Marie",
+      lastname: "Pfaff",
+      position: "goalkeeper",
+      nationality_id: 1
+    },
+    {
+      firstname: "Edson",
+      lastname: "Pele",
+      position: "striker",
+      nationality_id: 7
+    },
+    {
+      firstname: "Diego",
+      lastname: "Maradona",
+      position: "striker",
+      nationality_id: 5
+    },
+    {
+      firstname: "Dino",
+      lastname: "Zoff",
+      position: "goalkeeper",
+      nationality_id: 2
+    },
+    {
+      firstname: "Gianluigi",
+      lastname: "Buffon",
+      position: "goalkeeper",
+      nationality_id: 2
+    },
+    {
+      firstname: "Manuel",
+      lastname: "Neuer",
+      position: "goalkeeper",
+      nationality_id: 4
+    },
+    {
+      firstname: "Lionel",
+      lastname: "Messi",
+      position: "fieldplayer",
+      nationality_id: 5
+    },
+    {
+      firstname: "Andres",
+      lastname: "Iniesta",
+      position: "fieldplayer",
+      nationality_id: 3
+    },
+    {
+      firstname: "Cristiano",
+      lastname: "Ronaldo",
+      position: "striker",
+      nationality_id: 8
+    },
+    {
+      firstname: "Thierry",
+      lastname: "Henry",
+      position: "striker",
+      nationality_id: 6
+    },
+    {
+      firstname: "Eden",
+      lastname: "Hazard",
+      position: "fieldplayer",
+      nationality_id: 1
+    },
+    {
+      firstname: "Zinedine",
+      lastname: "Zidane",
+      position: "fieldplayer",
+      nationality_id: 6
+    },
+    {
+      firstname: "Paul",
+      lastname: "Van Himst",
+      position: "striker",
+      nationality_id: 1
+    }
+  ]) {
+    affected_rows
+  }
+}

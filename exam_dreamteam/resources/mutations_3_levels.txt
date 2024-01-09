@@ -1,0 +1,15 @@
+mutation {
+  insert_levels(objects: [
+    {
+      name: "Professional"
+    },
+    {
+      name: "Semi-professional"
+    },
+    {
+      name: "Amateur"
+    }
+  ]) {
+    affected_rows
+  }
+}

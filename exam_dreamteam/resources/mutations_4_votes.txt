@@ -1,0 +1,12 @@
+mutation {
+  insert_votes(objects: [
+    {
+      dreamteam: "Team 67 (Amateur)",
+      goalkeeper: "Jean-Marie Pfaff (Belgian)",
+      fieldplayer: "Zinedine Zidane (French)",
+      striker: "Diego Maradona (Argentinian)"
+    },
+  ]) {
+    affected_rows
+  }
+}

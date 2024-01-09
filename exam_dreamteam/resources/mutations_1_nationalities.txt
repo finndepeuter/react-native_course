@@ -1,0 +1,38 @@
+mutation {
+  insert_nationalities(objects: [
+    {
+      name: "Belgian",
+      emoji: "🇧🇪"
+    },
+    {
+      name: "Italian",
+      emoji: "🇮🇹"
+    },
+    {
+      name: "Spanish",
+      emoji: "🇪🇸"
+    },
+    {
+      name: "German",
+      emoji: "🇩🇪"
+    },
+    {
+      name: "Argentinian",
+      emoji: "🇦🇷"
+    },
+    {
+      name: "French",
+      emoji: "🇫🇷"
+    },
+    {
+      name: "Brazilian",
+      emoji: "🇧🇷"
+    },
+    {
+      name: "Portuguese",
+      emoji: "🇵🇹"
+    }
+  ]) {
+    affected_rows
+  }
+}
